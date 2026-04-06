@@ -1,6 +1,5 @@
 package com.rodrip.marketya.productList.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rodrip.marketya.productList.domain.model.Product
@@ -27,6 +26,9 @@ class ProductListViewModel @Inject constructor(
     val uiState: StateFlow<ProductListUiState> = _uiState.asStateFlow()
     private val _events = MutableSharedFlow<ProductListEvent>(extraBufferCapacity = 1)
     val events: SharedFlow<ProductListEvent> = _events
+
+    private val _filterVisible = MutableStateFlow<Boolean>(true)
+    val filterVisible: StateFlow<Boolean> = _filterVisible.asStateFlow()
 
     init {
         loadProduct()
@@ -60,6 +62,10 @@ class ProductListViewModel @Inject constructor(
         viewModelScope.launch {
             //Llamar a SettingRepository
         }
+    }
+
+    fun setFilterVisible(showFilters: Boolean) {
+        _filterVisible.value = showFilters
     }
 
 }

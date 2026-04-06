@@ -1,5 +1,10 @@
 package com.rodrip.marketya.productList.presentation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rodrip.marketya.productList.presentation.components.FiltersMenu
+import com.rodrip.marketya.productList.presentation.components.HomeTopAppBar
+import com.rodrip.marketya.productList.presentation.components.ProductItem
 
 @Composable
 fun ProductListScreen(
@@ -33,6 +40,7 @@ fun ProductListScreen(
 
     val uiState by productListViewModel.uiState.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
+    val filterVisibile by productListViewModel.filterVisible.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         productListViewModel.events.collect { event ->
@@ -45,6 +53,12 @@ fun ProductListScreen(
     }
 
     Scaffold(
+        topBar = {
+            HomeTopAppBar(
+                filtersVisible = filterVisibile,
+                onFilterSelected = { showFilters -> productListViewModel.setFilterVisible(showFilters) }
+            )
+        },
         snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { paddingValues ->
         when (val state: ProductListUiState = uiState) {
@@ -77,22 +91,23 @@ fun ProductListScreen(
                     Modifier
                         .fillMaxSize()
                         .padding(paddingValues)
-
                 ) {
-                    Text(
-                        text = "Lista de productos",
-                        fontSize = 40.sp,
-                        modifier = Modifier.padding(bottom = 16.dp)
-                    )
-                    FiltersMenu(
-                        state = state,
-                        onCategorySelected = { category ->
-                            productListViewModel.setCategory(category)
-                        },
-                        onSortSelected = { sortOption ->
-                            productListViewModel.setSortOption(sortOption)
-                        }
-                    )
+                    AnimatedVisibility(
+                        visible = filterVisibile,
+                        enter = expandVertically() + fadeIn(),
+                        exit = shrinkVertically() + fadeOut()
+                    ){
+                        FiltersMenu(
+                            state = state,
+                            onCategorySelected = { category ->
+                                productListViewModel.setCategory(category)
+                            },
+                            onSortSelected = { sortOption ->
+                                productListViewModel.setSortOption(sortOption)
+                            }
+                        )
+                    }
+
                     Text(
                         text = "Total: ${state.products.size} items",
                         style = MaterialTheme.typography.bodySmall,
