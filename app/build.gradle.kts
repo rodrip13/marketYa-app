@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     kotlin {
         jvmToolchain(17)
@@ -55,10 +56,14 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    //Iconos
+    implementation(libs.androidx.compose.material.icons.extended)
 
     //Images
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+
 
     //Navigation3
     implementation(libs.navigation3.runtime)
@@ -86,6 +91,16 @@ dependencies {
     //ViewModel
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.lifecycle.viewmodel.compose)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+
+    //Serialization
+    implementation(libs.kotlinx.serialization)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
