@@ -24,7 +24,7 @@ interface PromotionDao {
     suspend fun deleteAllPromotions()
 
     @Transaction
-    suspend fun refreshPromotions(promotions: List<PromotionEntity>) {
+    suspend fun replaceAll(promotions: List<PromotionEntity>) {
         deleteAllPromotions()
         insertPromotions(promotions)
     }

@@ -24,7 +24,7 @@ data class PromotionResponse(
     @SerialName("payY")
     val payY: Int? = null,
     @SerialName("startAtEpoch")
-    val startAtEpoch: Long,
+    val startAtEpoch: Long? = null,
     @SerialName("endAtEpoch")
-    val endAtEpoch: Long
+    val endAtEpoch: Long? = null
 )

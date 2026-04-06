@@ -1,12 +1,17 @@
 package com.rodrip.marketya.productList.domain.model
 
+import kotlin.time.Instant
+
+enum class PromotionType {
+    PERCENT,
+    BUY_X_PAY_Y
+}
 data class Promotion(
     val id: String,
-    val productId: String,
-    val type: String,
-    val percent: Int? = null,
-    val buyX: Int? = null,
-    val payY: Int? = null,
-    val startAtEpoch: Long,
-    val endAtEpoch: Long
+    val type: PromotionType,
+    val productId: List<String>,
+    val value: Double,
+    val buyQuantity: Int? = null,
+    val startTime: Instant,
+    val endTime: Instant
 )

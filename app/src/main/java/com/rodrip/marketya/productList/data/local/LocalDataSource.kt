@@ -22,4 +22,8 @@ class LocalDataSource @Inject constructor(
 
     fun getAllPromotions(): Flow<List<PromotionEntity>> = promotionDao.getAllPromotions()
 
+    suspend fun savePromotions(promotions: List<PromotionEntity>) {
+        promotionDao.replaceAll(promotions)
+    }
+
 }
