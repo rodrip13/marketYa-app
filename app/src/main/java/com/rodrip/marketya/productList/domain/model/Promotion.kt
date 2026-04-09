@@ -1,6 +1,7 @@
 package com.rodrip.marketya.productList.domain.model
 
-import kotlin.time.Instant
+import java.time.Instant
+
 
 enum class PromotionType {
     PERCENT,

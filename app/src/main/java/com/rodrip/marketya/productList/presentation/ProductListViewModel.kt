@@ -3,6 +3,7 @@ package com.rodrip.marketya.productList.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rodrip.marketya.productList.domain.model.Product
+import com.rodrip.marketya.productList.domain.model.ProductWithPromotion
 import com.rodrip.marketya.productList.domain.model.SortOption
 import com.rodrip.marketya.productList.domain.usecase.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,8 +37,8 @@ class ProductListViewModel @Inject constructor(
 
     fun loadProduct() {
         _uiState.value = ProductListUiState.Loading
-        getProductsUseCase().onEach { products: List<Product> ->
-            val categories = products.map { it.category }.distinct().sorted()
+        getProductsUseCase().onEach { products: List<ProductWithPromotion> ->
+            val categories = products.map { it.product.category }.distinct().sorted()
             _uiState.value = ProductListUiState.Success(
                 products = products,
                 categories = categories,

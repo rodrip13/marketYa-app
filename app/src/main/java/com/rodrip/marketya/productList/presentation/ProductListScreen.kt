@@ -136,7 +136,7 @@ fun ProductListScreen(
                         LazyColumn(
                         ) {
                             items(state.products) { product ->
-                                ProductItem(product = product, onClick = {})
+                                ProductItem(item = product, onClick = {})
                             }
                         }
                     }
